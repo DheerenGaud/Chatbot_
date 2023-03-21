@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Blog </title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'blog/index.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+   
+</head>
+<body>
+    <h1>Chat Bot</h1>
+    <div>
+         <div id="chatbot">
+             <p class="botText"> <span>Hi There</span></p>
+             <button class='massgeBtn' type='submit'>hellow</button> 
+         </div>
+         
+         <div id="userInput">
+              <input type="text" id="textInput" name="userMassage" placeholder="Type your massage">
+              <button id='send' type='submit'>Send</button>
+         </div>
+    </div>
+        
+     <script>
+        function  getUserResponse(){
+            var userTest=$('#textInput').val();
+            var userHTML= " <p class='userText'>User : <span>"+userTest+"</span></p>";
+            $('#textInput').val("");
+            $("#chatbot").append(userHTML);
+
+            $.get('/chatbot/getResponse',{userMessage:userTest}).done(function(data){
+                console.log(data)
+                    var buttonMaasage=""
+                     if(data=="hi, there"||data=="hi, Mathew"){
+                         buttonMaasage="<p class='botText'>Chatbot: <span>"+data+" is you locking for, <span/></p> <button class='massgeBtn' type='submit' >event</button><button class='massgeBtn' type='submit'>Collage info</button><button class='massgeBtn' type='submit'>Admission</button>"
+                     }
+                    //var something = $('<input/>').attr({ type: 'button', class:'massgeBtn', name:'btn1', value:data });
+                    //var returnMessage="<p class='botText'>Chatbot: <span>"+data+"<span/></p>";
+                    $("#chatbot").append(buttonMaasage) ;
+
+            })
+            
+        }
+        $("#send").click(function(){
+            console.log("heloos")
+            getUserResponse();
+        })
+        $("#chatbot").on("click","button.massgeBtn",function(){
+            console.log("Massage btn click")
+            //alert($(this).text());
+            var query=$(this).text();
+            $.get('/chatbot/specialQuery',{specialQuery:query}).done(function(data){
+                console.log(data)
+            })
+            
+        })
+        
+       </script>
+</body>
+</html>

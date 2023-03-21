@@ -1,0 +1,64 @@
+
+#chatbot{
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    border-radius: 12px;
+    border: 2px solid gray;
+    padding: 10px;
+}
+
+.botText{
+    font-family: monospace;
+    font-size: 14px;
+    text-align:left;
+    line-height: 25px;
+    color: rgb(109,111,109);
+}
+#userInput{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    width: 70%;
+    text-align: center;
+}
+#textInput{
+    border:3px solid white;
+    border-bottom:3px solid #afafaf;
+    font-family: monospace;
+    font-size: 14px;
+    width: 60%;
+    color: rgb(255, 102, 0);
+}
+.massgeBtn{
+    padding: 8px;
+    font-family: monospace;
+    font-size: 14px;
+    width: auto;
+    border:2px solid #afafaf;
+    background-color: #7d6683;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+}
+#send{
+    padding: 5px;
+    font-family: monospace;
+    font-size: 14px;
+    border:3px solid #afafaf;
+    background-color: rgb(49, 45, 45);
+    color: white;
+    border-radius: 10px;
+}
+h1{
+    font-family: monospace;
+    font-size: 40px;
+    text-align: center;
+    color: #666161 ;
+}
+.userText{
+    text-align: right;
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 25px;
+    color: rgb(109,111,109);
+}

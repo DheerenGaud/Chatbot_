@@ -54,6 +54,7 @@
             var query=$(this).text();
             $.get('/chatbot/specialQuery',{specialQuery:query}).done(function(data){
                 console.log(data)
+                
             })
             
         })

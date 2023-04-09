@@ -40,6 +40,17 @@
     color: rgb(0, 0, 0);
     border-radius: 10px;
 }
+.infobtn{
+    padding: 8px;
+    font-family: monospace;
+    font-size: 14px;
+    width: auto;
+    border:2px solid #afafaf;
+    background-color: #7d6683;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    margin: 5px;
+}
 #send{
     padding: 5px;
     font-family: monospace;
@@ -61,4 +72,16 @@ h1{
     font-size: 14px;
     line-height: 25px;
     color: rgb(109,111,109);
+}
+.mydiv{
+    background-color: #dbfbff;
+    border: 2px solid blue;
+    border-radius: 20px;
+    width: 60%;
+    padding: 20px;
+    margin: 10px 5px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.mydiv h2{
+   border-bottom: 4px solid #2db3c5;
 }

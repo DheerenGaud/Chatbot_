@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Blog </title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'blog/dashbord.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+    <div class="d-md-flex h">
+        <div id="mySidenav"class="sidenav col-xl-2 col-md-3 bg-dander ">
+           
+            <a href="{% url 'allevent'  %}" onclick="showevent()"
+                ><i class="bi bi-cloud-plus-fill fs-lg-5 me-1"></i> Show Event</a
+                >
+            <a href="{% url 'Addevent'  %}" onclick="uploadpage()"
+                ><i class="bi bi-cloud-plus-fill fs-lg-5 me-1"></i> Add Event</a
+                >
+            <a href="{% url 'collageinfo'  %}" 
+                ><i class="bi bi-cloud-plus-fill fs-lg-5 me-1"></i> Add Collage info</a
+                >
+            <a href="{% url 'admission'  %}">
+            <i class="bi bi-chat-left-text-fill fs-lg-5 me-1"></i> Addmission</a
+                >
+            <a href="{% url 'department'  %}">
+            <i class="bi bi-chat-left-text-fill fs-lg-5 me-1"></i> Department</a
+                >
+            <a href="{% url 'scholership'  %}" onclick="schoarship()"
+                ><i class="bi bi-person-circle fs-lg-5 me-1"></i> Schoarship</a
+                >
+            <a href="#" onclick="committees()"
+                ><i class="fa-solid fa-unlock-keyhole fs-lg-5 me-1"></i>
+            Club And committees</a
+                >
+            <a href="#" onclick="placement()">
+            <i class="fa-solid fa-trash fs-lg-5 me-1"></i> Placement</a
+                >
+            <a href="#"
+                ><i class="bi bi-box-arrow-right fs-lg-5 me-1 fw-semibold"></i>
+            Logout</a
+                >
+        </div>
+     
+            <!-- upload Property -->
+            <div class="delete w-100" id="EditProfile">
+                <div class="fs-1 fw-semibold px-5 ">Scholership</div>
+                <div
+                    class="d-flex flex-column m-2 mx-md-5 p-5 rounded"
+                    style="background-color: #ebe9e9" >
+                    <form class="row g-3">
+                       
+                            <h2>it</h2>
+                            
+                            <div class="col-md-6">
+                                <label for="inputlastname" class="form-label">Categories and minoretry</label>
+                                <input type="text" name="" class="form-control" id="" />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputlastname" class="form-label">fess</label>
+                                <input type="text" name="" class="form-control" id="" />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputlastname" class="form-label">require document</label>
+                                <input type="text" name="" class="form-control" id="" />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputlastname" class="form-label">contact info</label>
+                                <input type="text" name="" class="form-control" id="" />
+                            </div>
+                            <label for="inputlastname" class="form-label">Detail</label>
+                            <div class="col-md-12">
+                                <textarea id="w3review" name="w3review" rows="4" cols="50" >
+                                   
+                                </textarea>
+                            </div>
+                           
+                        
+                      
+                        
+                        <div class="">
+                            <button
+                                type="button"
+                                class="delete-btn btn btn-warning py-md-3 px-md-4 fs-0"
+                                >
+                            Save Event
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+       </div>
+        
+          
+    <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"
+    ></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"
+    ></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+    integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+    crossorigin="anonymous"
+    ></script>
+  
+</body>
+</html>
+
+
+
+
+
+

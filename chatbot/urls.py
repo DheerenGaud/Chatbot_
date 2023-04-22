@@ -13,6 +13,7 @@ urlpatterns=[
     path("department",views.Department,name="department"),
     path("departmentinfo/",views.Department,name="departmentinfo"),
     path("admission",views.Addmission,name="admission"),
+    path("admissioninfo/",views.Addmissioninfo,name="admissioninfo"),
     path("scholership",views.Scholership,name="scholership"),
     path("allevent",views.Allevent,name="allevent"),
     path("editevent/<x_id>",views.AlleventActionEdit,name="editevent"),

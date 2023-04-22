@@ -13,7 +13,7 @@
     font-size: 14px;
     text-align:left;
     line-height: 25px;
-    color: rgb(109,111,109);
+    color: rgb(66, 66, 66);
 }
 #userInput{
     margin-left: auto;
@@ -35,8 +35,8 @@
     font-family: monospace;
     font-size: 14px;
     width: auto;
-    border:2px solid #afafaf;
-    background-color: #7d6683;
+    border:2px solid #ffb8ac;
+    background-color: #ffe5d9;
     color: rgb(0, 0, 0);
     border-radius: 10px;
 }
@@ -45,8 +45,8 @@
     font-family: monospace;
     font-size: 14px;
     width: auto;
-    border:2px solid #afafaf;
-    background-color: #7d6683;
+    border:2px solid #ffb8ac;
+    background-color: #ffe5d9;
     color: rgb(0, 0, 0);
     border-radius: 10px;
     margin: 5px;
@@ -60,12 +60,8 @@
     color: white;
     border-radius: 10px;
 }
-h1{
-    font-family: monospace;
-    font-size: 40px;
-    text-align: center;
-    color: #666161 ;
-}
+
+
 .userText{
     text-align: right;
     font-family: monospace;
@@ -74,8 +70,8 @@ h1{
     color: rgb(109,111,109);
 }
 .mydiv{
-    background-color: #dbfbff;
-    border: 2px solid blue;
+    background-color: #fff2f0;
+    border: 2px solid #ffd3cd ;
     border-radius: 20px;
     width: 60%;
     padding: 20px;
@@ -83,5 +79,19 @@ h1{
     font-family: Arial, Helvetica, sans-serif;
 }
 .mydiv h2{
-   border-bottom: 4px solid #2db3c5;
+    border-bottom: 4px solid #e9c3bc;
+}
+h1{
+    font-family: monospace;
+    font-size: 25px;
+    line-height: 30px;
+    text-align: center;
+    color: #666161 ;
+}
+h3{
+    font-family: monospace;
+    font-size: 10px;
+    line-height: 15px;
+    text-align: center;
+    color: #666161 ;
 }

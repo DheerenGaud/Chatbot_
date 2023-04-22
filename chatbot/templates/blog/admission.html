@@ -54,82 +54,36 @@
                 <div
                     class="d-flex flex-column m-2 mx-md-5 p-5 rounded"
                     style="background-color: #ebe9e9" >
-                    <form class="row g-3">
-                       
-                            <h2>it</h2>
+                    <form class="row g-3" action="/chatbot/admissioninfo/" method="post">
+                        {% csrf_token %}
+                        <div class="col-md-6">
+                            <label for="inputlastname" class="form-label">Select Department  </label>
+                            <select class="form-select" aria-label="Default select example" name="department_name">
+                                <option selected>None</option>
+                                <option value="It">It</option>
+                                <option value="Comp">Comp</option>
+                                <option value="Extc">Extc</option>
+                                <option value="Mech">Mech</option>
+                              </select>
+                        </div>
                             <div class="col-md-6">
                                 <label for="inputlastname" class="form-label">cut off</label>
-                                <input type="text" name="" class="form-control" id="inputfirstname" />
+                                <input type="Number" min="0" name="cutoff" class="form-control" id="inputfirstname" />
                             </div>
-                            <div class="col-md-6">
-                                <label for="inputlastname" class="form-label">fess</label>
-                                <input type="text" name="" class="form-control" id="" />
-                            </div>
+                           
                             <div class="col-md-6">
                                 <label for="inputlastname" class="form-label">Capacity</label>
-                                <input type="text" name="" class="form-control" id="" />
+                                <input type="text" type="Number" min="0" name="capacity" class="form-control" id="" />
                             </div>
-                            <div class="col-md-6">
-                                <label for="inputlastname" class="form-label">contact info</label>
-                                <input type="text" name="" class="form-control" id="" />
+                    
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Detail </label>
+                                <textarea class="form-control" name="detail" Value= id="exampleFormControlTextarea1" rows="5">{{mathew.detail}}</textarea>
                             </div>
-                            <h2>comp</h2>
-                            <div class="col-md-6">
-                                <label for="inputlastname" class="form-label">cut off</label>
-                                <input type="text" name="" class="form-control" id="inputfirstname" />
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputlastname" class="form-label">fess</label>
-                                <input type="text" name="" class="form-control" id="" />
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputlastname" class="form-label">Capacity</label>
-                                <input type="text" name="" class="form-control" id="" />
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputlastname" class="form-label">contact info</label>
-                                <input type="text" name="" class="form-control" id="" />
-                            </div>
-                            <h2>extc</h2>
-                            <div class="col-md-6">
-                                <label for="inputlastname" class="form-label">cut off</label>
-                                <input type="text" name="" class="form-control" id="inputfirstname" />
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputlastname" class="form-label">Capacity</label>
-                                <input type="text" name="" class="form-control" id="" />
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputlastname" class="form-label">fess</label>
-                                <input type="text" name="" class="form-control" id="" />
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputlastname" class="form-label">contact info</label>
-                                <input type="text" name="" class="form-control" id="" />
-                            </div>
-                            <h2>mech</h2>
-                            <div class="col-md-6">
-                                <label for="inputlastname" class="form-label">cut off</label>
-                                <input type="text" name="" class="form-control" id="inputfirstname" />
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputlastname" class="form-label">Capacity</label>
-                                <input type="text" name="" class="form-control" id="" />
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputlastname" class="form-label">fess</label>
-                                <input type="text" name="" class="form-control" id="" />
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputlastname" class="form-label">contact info</label>
-                                <input type="text" name="" class="form-control" id="" />
-                            </div>
-                        
-                      
-                        
+
                         <div class="">
                             <button
-                                type="button"
+                                type="submit"
                                 class="delete-btn btn btn-warning py-md-3 px-md-4 fs-0"
                                 >
                             Save Event
@@ -137,7 +91,57 @@
                         </div>
                     </form>
                 </div>
+
+                <div class=" mt-4 bg-gray text-center rounded-3 m-2 mx-md-5 p-5" style="background-color: rgb(244, 242, 242); min-height:50vh" >
+
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col " class="fs-4">
+                           Department
+                          </th>
+                          <th scope="col" class="fs-4">
+                           Fees
+                          </th>
+                          <th scope="col" class="fs-4">
+                           Cut off
+                          </th>
+                          <th scope="col ms-4" class="fs-4">
+                           Total Seet
+                          </th>
+                        </tr>
+                      </thead>
+                      
+                      <tbody>
+                         {% for x in events %}
+          
+                         <tr class="fs-5 align-middle">
+                           <td>{{x.event}}</td>
+                           <td>
+                            {{x.eventstart}}
+                            </td>
+                            <td>
+                              {{x.eventend}}
+                            </td>
+                            <td>
+                              <button class="btn btn-primary  " onclick="handleclick(this)" id= "e{{x.id}}">
+                                <a href="{% url 'editevent' x.id %}" style="color:#ccc"> Edit</a>
+                                <i class="bi bi-pencil-square"  ></i>
+                              </button>
+                              <button class="btn btn-danger mx-1 " onclick="handleclick(this)" id= "d{{x.id}}">
+                                <a href="{% url 'deleteevent' x.id %}" style="color:#ccc"> Delete</a>
+                                <i class="bi bi-trash"></i>
+                              </button>
+                            </td>
+                          </tr>
+                          {% endfor %}
+                      
+                        
+                      </tbody>
+                    </table>
+                  </div>
             </div>
+            
        </div>
         
           

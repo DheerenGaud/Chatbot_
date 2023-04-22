@@ -17,43 +17,50 @@
          <div id="chatbot">
              <p class="botText"> <span>Hi There</span></p>
          </div>
-         
          <div id="userInput">
               <input type="text" id="textInput" name="userMassage" placeholder="Type your message">
               <form method="">
                   <button id='send' type="button" > Send</button>
               </form>
          </div>
-    </div>
-        
+    </div>   
      <script>
+        var intrupt=false
+        var introDisplay=true;
+        var btncount=0;
+        var timeoutID = setTimeout(dispalyon, 10000);
+        var waitid
         function  getUserResponse(){
+            intrupt=true
+            waitForNextDispaly()
+
             var userTest=$('#textInput').val();
             var userHTML= " <p class='userText'>User : <span>"+userTest+"</span></p>";
             $('#textInput').val("");
             $("#chatbot").append(userHTML);
-
             $.get('/chatbot/getResponse',{userMessage:userTest}).done(function(data){
                     var buttonMaasage=""
                      if(data=="hi, there"||data=="hi,Mathew"){
-                         buttonMaasage="<p class='botText'>Chatbot: <span>"+data+" are you looking for, <span/></p> <button class='massgeBtn' type='submit' >event</button><button class='massgeBtn' type='submit'>Collage info</button><button class='massgeBtn' type='submit'>Department</button>"
-                         $("#chatbot").append(buttonMaasage);
+                        intervalrespose()
                      }
                      else{
+                        intrupt=true;
+                        introDisplay=true;
                          try{
                             div=""
                             let x= setupall(JSON.parse(data),div);
                             div="<div class='mydiv'>"+x+("</div>")
                             $("#chatbot").append(div) ;
-
+                        
                         }catch(err){
                                 buttonMaasage="<p class='botText'>Chatbot: <span>"+data+"<span/></p>"
                                     $("#chatbot").append(buttonMaasage);
                         }
-
-                        }   
+                        
+                    }   
             })
         }
+
         $("#send").click(function(){
             getUserResponse();
         })
@@ -63,8 +70,9 @@
               }
           });
 
-
-        $("#chatbot").on("click","button.massgeBtn",function(){
+        $("#chatbot").on("click","button.massgeBtn",function(p){
+            intrupt=true
+            waitForNextDispaly()
             console.log("Massage btn click")
             var query=$(this).text();
             $.get('/chatbot/specialQuery',{specialQuery:query}).done(function(data){
@@ -76,40 +84,47 @@
             })
             
         })
+        
+        
+        
 
-        $("#chatbot").on("click","button.infobtn",function(){
-            var topic=$(this).text();
-            $.get('/chatbot/getResponse',{userMessage:topic}).done(function(data){
+
+
+        function myFunction(event) {
+            event.preventDefault();
+            var name = event.target.getAttribute('name');
+            var buttonText = event.target.textContent;
+            console.log(buttonText)
+            $.get('/chatbot/getResponse',{userMessage:name+buttonText}).done(function(data){
                 div=""
                 let x= setupall(JSON.parse(data),div);
                 div="<div class='mydiv'>"+x+("</div>")
                 $("#chatbot").append(div) ;
             })  
-        })
-        
-      
-
-        function handlarray(data,type){
+           
+          }
+        function handlarray(data,type,name){
             x=""
             if(typeof data[0]=="object"){
                   Object.keys(data[0]).forEach(function(key) {
-                    x=x+"<"+type+">"+key+":"+data[0][key]+"</"+type+">"
-                   // console.log('Key : ' + key + ', Value : ' + data[0][key])
+                    x=x+"<"+type+" data-type='"+name+"' >"+key+":"+data[0][key]+"</"+type+">"
+                  
                   })
             }
             else if(type=="button"){
                 for(let i=0;i<data.length;i++){
-                    x=x+"<button class='infobtn' type='submit' >"+data[i]+"</button>"
+                    x=x+"<button id='infobtn"+btncount+"' "+"name='"+name+"' type='submit' onclick='myFunction(event)' >"+data[i]+"</button>"
+                    btncount++;
                 }
             }
             return x
         } 
 
         function setupall(data,div){
+            name=data.type
             Object.keys(data).forEach(function(key) {
-               // console.log('Key : ' + key + ', Value : ' + data[key])
                 if(Array.isArray(data[key])){
-                        div= div+handlarray(data[key],key) 
+                        div= div+handlarray(data[key],key,name) 
                 }
                 else{
                     if(key=='h1'||key=="h2"|key=="h3"||key=="p"){
@@ -130,8 +145,28 @@
         }
 
 
-
-        
+        function intervalrespose(){
+            buttonMaasage="<p class='botText'>Chatbot: <span>Hi What are you looking for, <span/></p> <button class='massgeBtn' type='submit' >event</button><button class='massgeBtn' type='submit'>Collage info</button><button class='massgeBtn' type='submit'>Department</button><button class='massgeBtn' type='submit'>Admmision</button>"
+                $("#chatbot").append(buttonMaasage);
+        }
+      
+      
+      function dispalyon(){
+        if(introDisplay){
+            introDisplay=false;
+            intrupt=false;
+            intervalrespose();
+        }
+      }  
+     
+      function waitForNextDispaly(){
+          if(intrupt){
+            clearTimeout(waitid);
+            introDisplay=true;
+            waitid= setTimeout(dispalyon, 20000)
+          }
+         
+      }
        </script>
 </body>
 </html>

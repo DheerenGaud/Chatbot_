@@ -13,28 +13,28 @@ from chatterbot import ChatBot
 
 from chatterbot.trainers import ListTrainer
 
+
 bot=ChatBot('chatbot',read_only=False,logic_adapters=[ "chatterbot.logic.BestMatch",
                                                       'chatterbot.logic.MathematicalEvaluation',
                                                       'chatterbot.logic.TimeLogicAdapter'
-                                                                        ])
+                                                                        ],trainer='chatterbot.trainers.ListTrainer')
 # bot.storage.drop()
 list_to_train= [
     "hi",
-    "hi,Mathew",
+    "hi, I am a chatbot of collage fcrit",
     "What's your name?",
     "I'm just a chatbot",
 ]
 
 
-
 list_trainer=ListTrainer(bot)
-
+list_trainer.train(list_to_train)
 def restart():
       # event
        global list_to_train
        print(list_to_train)
        list_to_train=[];
-       list_to_train=["hi","hi,Mathew","What's your name?","I'm just a chatbot"] 
+       list_to_train=["hi","I am a chatbot of collage fcrit","What's your name?","I'm just a chatbot"] 
        bot.storage.drop()
        data = list(Newevent.objects.values())
        p=[];
@@ -45,15 +45,17 @@ def restart():
        list_to_train.append(json.dumps(item)) 
        data = list(Newevent.objects.values())
        for x in data:
-        list_to_train.append(x['event']) 
         a={"type":"Event","h2":x['event'],"p":x['discription'],"a":str(x['eventurl']),"h3":[{"Start at":str(x['eventstart']),"End at":str(x['eventend'])}]}
+        list_to_train.append("event"+x['event']) 
+        list_to_train.append(json.dumps(a))
+        list_to_train.append(x['event']) 
         list_to_train.append(json.dumps(a))
         
         
         
        #   collage
        col = list(Collageinfo.objects.values())
-       b={"type":"Collage info","h1":col[0]['collagename'],"h3" :col[0]['achivment'],"p":col[0]['detail'],'a':col[0]['collageurl']}
+       b={"type":"Collage","h1":col[0]['collagename'],"h3" :col[0]['achivment'],"p":col[0]['detail'],'a':col[0]['collageurl']}
        list_to_train.append('fcrit') 
        list_to_train.append(json.dumps(b))
        #  print(json.dumps(b)) 
@@ -66,18 +68,36 @@ def restart():
        p=[];
        for i in D:
             p.append(i['department_name'])  
-       item={"type":'Department info',"button":p}
-       list_to_train.append('department') 
+       item={"type":'Department',"button":p}
+       list_to_train.append('Department') 
        list_to_train.append(json.dumps(item)) 
              
        for x in D:
-        b={"type":"Department info","h1":x["department_name"],"h2":[{"HOD":x["department_hod_name"],"Fees":str(x["department_fees"])}],"h3":[{"Teaching Staff":str(x['department_teachingstaff']),"Non-Teaching Staff":str(x['department_nonteachingstaff'])}]}
+        b={"type":"Department","h1":x["department_name"],"h2":[{"HOD":x["department_hod_name"],"Fees":str(x["department_fees"])}],"h3":[{"Teaching Staff":str(x['department_teachingstaff']),"Non-Teaching Staff":str(x['department_nonteachingstaff'])}]}
+        list_to_train.append("Department"+x['department_name']) 
+        list_to_train.append(json.dumps(b))
         list_to_train.append(x['department_name']) 
         list_to_train.append(json.dumps(b))
       #  print(json.dumps(b))
       
       
       
+      # addmission 
+       D = list(Deparment.objects.values())
+       p=[];
+       for i in D:
+            p.append(i['department_name'])  
+       item={"type":'Admmision',"button":p}
+       list_to_train.append('Admmision') 
+       list_to_train.append(json.dumps(item)) 
+             
+       for x in D:
+        b={"type":"Admmision","h1":x["department_name"],"h2":[{"Capacity":x["admission_capacity"],"Cutoff":x["admission_cutoff"],"Fees":str(x["department_fees"])}],"p":x["admission_detail"]}
+        list_to_train.append("Admmision"+x['department_name']) 
+        list_to_train.append(json.dumps(b))
+       
+      
+
       #training start
        list_trainer.train(list_to_train) 
        list_trainer.train(list_to_train) 
@@ -85,8 +105,6 @@ def restart():
        list_trainer.train(list_to_train) 
        list_trainer.train(list_to_train) 
        print(list_to_train)
-       
-         
        
 # restart()       
 
@@ -136,7 +154,7 @@ def Department(request):
        
        D = list(Deparment.objects.values())
        print(D)
-       b={"type":"Department info","h1":D[0]["department_name"],"h2":[{"HOD":D[0]["department_hod_name"],"Fees":str(D[0]["department_fees"])}],"h3":[{"Teaching Staff":str(D[0]['department_teachingstaff']),"Non-Teaching Staff":str(D[0]['department_nonteachingstaff'])}]}
+       b={"type":"Department","h1":D[0]["department_name"],"h2":[{"HOD":D[0]["department_hod_name"],"Fees":str(D[0]["department_fees"])}],"h3":[{"Teaching Staff":str(D[0]['department_teachingstaff']),"Non-Teaching Staff":str(D[0]['department_nonteachingstaff'])}]}
        list_to_train.append(D[0]['department_name']) 
        list_to_train.append(json.dumps(b))
        print(json.dumps(b))
@@ -175,15 +193,42 @@ def addCollageinfo(request):
          collageurl=request.POST.get("url")
          detail=request.POST.get("detail")
          x=Collageinfo(collagename=collagename,achivment=achivment,collageurl=collageurl,detail=detail,)
+         
          x.save()  
       restart()
       return  HttpResponse("hellow colage info in  is added")
 
 
-
-
 def Addmission(request):
       return render(request,'blog/admission.html')
+
+
+def Addmissioninfo(request):
+     if(request.method=="POST"):
+         department_name=request.POST.get("department_name")    
+         admission_cutoff=request.POST.get("cutoff")
+         admission_capacity=request.POST.get("capacity")
+         admission_detail=request.POST.get("detail")
+         D = list(Deparment.objects.values())
+         print(D)
+         b={"type":"Admmision","h1":D[0]["department_name"],"h2":[{"Total Seet":D[0]["admission_capacity"],"Fees":str(D[0]["department_fees"]),"Cut of":D[0]["admission_cutoff"]}],"p":D[0]["admission_detail"]}
+         list_to_train.append(D[0]['department_name']) 
+         depart,created = Deparment.objects.get_or_create(department_name=department_name)
+         if created:
+          created.admission_cutoff=admission_cutoff
+          created.admission_capacity=admission_capacity
+          created.admission_detail=admission_detail
+          created.save();
+         else:
+          depart.department_name=department_name
+          depart.admission_cutoff=admission_cutoff
+          depart.admission_capacity=admission_capacity
+          depart.admission_detail=admission_detail
+          depart.save();
+      #     restart()    
+         return render(request,'blog/admission.html')
+      
+
 
 def Scholership(request):
       return render(request,'blog/scholership.html')

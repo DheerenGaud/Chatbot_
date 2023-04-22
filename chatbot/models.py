@@ -21,12 +21,15 @@ class Collageinfo(models.Model):
     def __str__(self) -> str:
         return self.collagename
     
-
 class Deparment(models.Model):
     department_name = models.CharField(max_length=50)
     department_hod_name = models.CharField(max_length=100)
     department_teachingstaff = models.IntegerField()
     department_nonteachingstaff = models.IntegerField()
     department_fees = models.IntegerField()
-    def _str_(self):
+    admission_cutoff = models.IntegerField(default=1)
+    admission_capacity = models.IntegerField(default=1)
+    admission_detail=models.CharField(max_length=1000,default="null")
+        
+    def _str_(self)  -> str:
         return self.department_name    

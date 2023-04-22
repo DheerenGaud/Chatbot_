@@ -27,18 +27,28 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# CELERY_BROKER_URL = 'redis://localhost:6379/0'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
 
 # Application definition
 
+CRONJOBS = [
+    ('*/2 * * * *', 'core.management.commands.deleteevent')
+]
+
+
+
 INSTALLED_APPS = [
     'chatbot.apps.ChatbotConfig',
-    'playground.apps.PlaygroundConfig',
     'django.contrib.admin',
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "core",
+    "crontab",
 ]
 
 MIDDLEWARE = [
@@ -106,8 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 

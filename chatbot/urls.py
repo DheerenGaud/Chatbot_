@@ -14,10 +14,12 @@ urlpatterns=[
     path("departmentinfo/",views.Department,name="departmentinfo"),
     path("admission",views.Addmission,name="admission"),
     path("admissioninfo/",views.Addmissioninfo,name="admissioninfo"),
-    path("scholership",views.Scholership,name="scholership"),
+    path("scholership/",views.Scholership,name="scholership"),
+    path("placement/",views.Placement,name="placement"),
     path("allevent",views.Allevent,name="allevent"),
     path("editevent/<x_id>",views.AlleventActionEdit,name="editevent"),
     path("deleteevent/<x_id>",views.AlleventActionDelete,name="deleteevent"),
     path("newEvent/",views.newEvent),
-    path("setcollageinfo/",views.addCollageinfo)
+    path("setcollageinfo/",views.addCollageinfo),
+    path("login/",views.login_view,name="login"),
 ]

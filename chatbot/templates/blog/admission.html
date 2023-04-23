@@ -39,9 +39,9 @@
                 ><i class="fa-solid fa-unlock-keyhole fs-lg-5 me-1"></i>
             Club And committees</a
                 >
-            <a href="#" onclick="placement()">
-            <i class="fa-solid fa-trash fs-lg-5 me-1"></i> Placement</a
-                >
+                <a href="{% url 'placement'  %}" >
+                    <i class="fa-solid fa-trash fs-lg-5 me-1"></i> Placement</a
+                  >
             <a href="#"
                 ><i class="bi bi-box-arrow-right fs-lg-5 me-1 fw-semibold"></i>
             Logout</a
@@ -113,25 +113,18 @@
                       </thead>
                       
                       <tbody>
-                         {% for x in events %}
-          
+                        
+                         {% for x in data %}
                          <tr class="fs-5 align-middle">
-                           <td>{{x.event}}</td>
+                           <td>{{x.department_name}}</td>
                            <td>
-                            {{x.eventstart}}
+                            {{x.department_fees}}
                             </td>
                             <td>
-                              {{x.eventend}}
+                              {{x.admission_cutoff}}
                             </td>
                             <td>
-                              <button class="btn btn-primary  " onclick="handleclick(this)" id= "e{{x.id}}">
-                                <a href="{% url 'editevent' x.id %}" style="color:#ccc"> Edit</a>
-                                <i class="bi bi-pencil-square"  ></i>
-                              </button>
-                              <button class="btn btn-danger mx-1 " onclick="handleclick(this)" id= "d{{x.id}}">
-                                <a href="{% url 'deleteevent' x.id %}" style="color:#ccc"> Delete</a>
-                                <i class="bi bi-trash"></i>
-                              </button>
+                              {{x.admission_capacity}}
                             </td>
                           </tr>
                           {% endfor %}

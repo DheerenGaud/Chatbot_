@@ -27,15 +27,16 @@
      <script>
         var intrupt=false
         var introDisplay=true;
-        var btncount=0;
-        var timeoutID = setTimeout(dispalyon, 10000);
+        setTimeout(dispalyon, 10000);
         var waitid
         function  getUserResponse(){
             intrupt=true
             waitForNextDispaly()
 
             var userTest=$('#textInput').val();
-            var userHTML= " <p class='userText'>User : <span>"+userTest+"</span></p>";
+            var userHTML= " <div class='userText'> <p class='userconatiner'>"+userTest+"</p></div>"
+
+           // var userHTML= " <button class='userText'>User : <span>"+userTest+"</span></button>";
             $('#textInput').val("");
             $("#chatbot").append(userHTML);
             $.get('/chatbot/getResponse',{userMessage:userTest}).done(function(data){
@@ -59,7 +60,11 @@
                         
                     }   
             })
+            
         }
+
+        
+        
 
         $("#send").click(function(){
             getUserResponse();
@@ -81,18 +86,17 @@
                     console.log(x)
                     div="<div class='mydiv'>"+x+("</div>")
                     $("#chatbot").append(div) ;
+                    
             })
             
         })
         
         
-        
-
-
 
         function myFunction(event) {
             event.preventDefault();
             var name = event.target.getAttribute('name');
+            console.log(name)
             var buttonText = event.target.textContent;
             console.log(buttonText)
             $.get('/chatbot/getResponse',{userMessage:name+buttonText}).done(function(data){
@@ -107,14 +111,15 @@
             x=""
             if(typeof data[0]=="object"){
                   Object.keys(data[0]).forEach(function(key) {
-                    x=x+"<"+type+" data-type='"+name+"' >"+key+":"+data[0][key]+"</"+type+">"
+                    x=x+"<"+type+" name='"+name+"' >"+key+":"+data[0][key]+"</"+type+">"
                   
                   })
             }
             else if(type=="button"){
                 for(let i=0;i<data.length;i++){
-                    x=x+"<button id='infobtn"+btncount+"' "+"name='"+name+"' type='submit' onclick='myFunction(event)' >"+data[i]+"</button>"
-                    btncount++;
+                    console.log("-->"+name)
+                    x=x+"<button class='infobtn' name='"+name+"' type='submit' onclick='myFunction(event)' >"+data[i]+"</button>"
+                   
                 }
             }
             return x
@@ -146,7 +151,7 @@
 
 
         function intervalrespose(){
-            buttonMaasage="<p class='botText'>Chatbot: <span>Hi What are you looking for, <span/></p> <button class='massgeBtn' type='submit' >event</button><button class='massgeBtn' type='submit'>Collage info</button><button class='massgeBtn' type='submit'>Department</button><button class='massgeBtn' type='submit'>Admmision</button>"
+            buttonMaasage="<p class='botText'>Chatbot: <span>Hi What are you looking for, <span/></p> <button class='massgeBtn' type='submit' >event</button><button class='massgeBtn' type='submit'>Collage info</button><button class='massgeBtn' type='submit'>Department</button><button class='massgeBtn' type='submit'>Admmision</button><button class='massgeBtn' type='submit'>Scholarship</button>"
                 $("#chatbot").append(buttonMaasage);
         }
       

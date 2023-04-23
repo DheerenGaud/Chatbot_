@@ -33,6 +33,11 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
+LOGIN_REDIRECT_URL='dashbord'
+LOGIN_URL ='login'
+
+
 CRONJOBS = [
     ('*/2 * * * *', 'core.management.commands.deleteevent')
 ]
@@ -41,6 +46,7 @@ CRONJOBS = [
 
 INSTALLED_APPS = [
     'chatbot.apps.ChatbotConfig',
+    'playground.apps.PlaygroundConfig',
     'django.contrib.admin',
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -49,6 +55,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "core",
     "crontab",
+
 ]
 
 MIDDLEWARE = [

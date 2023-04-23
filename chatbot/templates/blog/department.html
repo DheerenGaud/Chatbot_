@@ -38,9 +38,9 @@
                 ><i class="fa-solid fa-unlock-keyhole fs-lg-5 me-1"></i>
             Club And committees</a
                 >
-            <a href="#" onclick="placement()">
-            <i class="fa-solid fa-trash fs-lg-5 me-1"></i> Placement</a
-                >
+                <a href="{% url 'placement'  %}" >
+                    <i class="fa-solid fa-trash fs-lg-5 me-1"></i> Placement</a
+                  >
             <a href="#"
                 ><i class="bi bi-box-arrow-right fs-lg-5 me-1 fw-semibold"></i>
             Logout</a
@@ -54,7 +54,7 @@
                     class="d-flex flex-column m-2 mx-md-5 p-5 rounded"
                     style="background-color: #ebe9e9" >
                     <form class="row g-3"  method="post" action="/chatbot/departmentinfo/">
-                       -
+                        {% csrf_token %}
                         <div class="col-md-6">
                             <label for="inputlastname" class="form-label">Select Department  </label>
                             <select class="form-select" aria-label="Default select example" name="department_name">
@@ -93,6 +93,54 @@
                         </div>
                     </form>
                 </div>
+                <div class=" mt-4 bg-gray text-center rounded-3 m-2 mx-md-5 p-5" style="background-color: rgb(244, 242, 242); min-height:50vh" >
+    
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col " class="fs-4">
+                           Department
+                          </th>
+                          <th scope="col" class="fs-4">
+                           HOD
+                          </th>
+                          <th scope="col" class="fs-4">
+                            Teaching Staff
+                          </th>
+                          <th scope="col ms-4" class="fs-4">
+                          Non-Teaching Staff
+                          </th>
+                          <th scope="col ms-4" class="fs-4">
+                          Fees
+                          </th>
+                        </tr>
+                      </thead>
+                      
+                      <tbody>
+                        
+                         {% for x in data %}
+                         <tr class="fs-5 align-middle">
+                           <td>{{x.department_name}}</td>
+                           <td>
+                            {{x.department_hod_name}}
+                            </td>
+                            <td>
+                              {{x.department_teachingstaff}}
+                            </td>
+                            <td>
+                              {{x.department_nonteachingstaff}}
+                            </td>
+                            <td>
+                              {{x.department_fees}}
+                            </td>
+                          </tr>
+                          {% endfor %}
+                      
+                        
+                      </tbody>
+                    </table>
+                  </div>
+            </div>
             </div>
        </div>
         

@@ -7,22 +7,24 @@ from chatbot.models import Scholarship
 from django.shortcuts import redirect
 from asgiref.sync import sync_to_async
 from django.contrib.auth import authenticate, login
-from django.contrib import messages
+from django.contrib import messages,auth
 import json
 from django.contrib.auth.decorators import login_required
-
-
-
 from chatterbot import ChatBot
-
 from chatterbot.trainers import ListTrainer
 
 
-bot=ChatBot('chatbot',read_only=False,logic_adapters=[ "chatterbot.logic.BestMatch",
+
+
+
+bot=ChatBot('chatbot',maximum_similarity_threshold=0.8,default_response="I did not quite understand. Can you please rephrase your question? <p class='botText'><span>Is you waiting fot this.., <span/></p> <button class='massgeBtn' type='submit' >event</button><button class='massgeBtn' type='submit'>Collage info</button><button class='massgeBtn' type='submit'>Department</button><button class='massgeBtn' type='submit'>Admmision</button><button class='massgeBtn' type='submit'>Scholarship</button>",logic_adapters=[ "chatterbot.logic.BestMatch",
                                                       'chatterbot.logic.MathematicalEvaluation',
-                                                      'chatterbot.logic.TimeLogicAdapter'
-                                                                        ],trainer='chatterbot.trainers.ListTrainer')
-# bot.storage.drop()
+                                                      'chatterbot.logic.TimeLogicAdapter',
+                                                       {'import_path':'chatterbot.logic.BestMatch',
+                                     }
+                          ]
+                     )
+
 list_to_train= [
     "hi",
     "hi, I am a chatbot of collage fcrit",
@@ -40,6 +42,7 @@ def restart():
        list_to_train=[];
        list_to_train=["hi","I am a chatbot of collage fcrit","What's your name?","I'm just a chatbot"] 
        bot.storage.drop()
+       
        data = list(Newevent.objects.values())
        p=[];
        for i in data:
@@ -118,10 +121,9 @@ def restart():
         list_to_train.append(x['scholarship_name']) 
         list_to_train.append(json.dumps(b))
         
-       
-      
 
-      #training start
+
+       #training start
        list_trainer.train(list_to_train) 
        list_trainer.train(list_to_train) 
        list_trainer.train(list_to_train) 
@@ -235,11 +237,11 @@ def addCollageinfo(request):
          achivment=request.POST.get("achivment")
          collageurl=request.POST.get("url")
          detail=request.POST.get("detail")
-         x=Collageinfo(collagename=collagename,achivment=achivment,collageurl=collageurl,detail=detail,)
-         
+         x=Collageinfo(collagename=collagename,achivment=achivment,collageurl=collageurl,detail=detail)
          x.save()  
       restart()
-      return  HttpResponse("hellow colage info in  is added")
+      mathew = Collageinfo.objects.filter()[:1].get()
+      return render(request,'blog/collageinfo.html',{'mathew':mathew})
 
 @login_required
 def Addmission(request):
@@ -254,13 +256,12 @@ def Addmissioninfo(request):
          admission_cutoff=request.POST.get("cutoff")
          admission_capacity=request.POST.get("capacity")
          admission_detail=request.POST.get("detail")
-         
          depart,created = Deparment.objects.get_or_create(department_name=department_name)
          if created:
-          created.admission_cutoff=admission_cutoff
-          created.admission_capacity=admission_capacity
-          created.admission_detail=admission_detail
-          created.save();
+          depart.admission_cutoff=admission_cutoff
+          depart.admission_capacity=admission_capacity
+          depart.admission_detail=admission_detail
+          depart.save();
          else:
           depart.department_name=department_name
           depart.admission_cutoff=admission_cutoff
@@ -280,18 +281,19 @@ def Scholership(request):
        scholarship_name=request.POST.get("scholarship_name")    
        scholarship_documents=request.POST.getlist("scholarship_documents")
        scholarship_contact=request.POST.get("scholarship_contact")
-       scholarship_dsiscription=request.POST.get("scholarship_dsiscription")
+       scholarship_dsiscription=request.POST.get("scholarship_dsiscription")  
+       my_text = ", ".join(scholarship_documents)
 
        scholar,created = Scholarship.objects.get_or_create(scholarship_name=scholarship_name)
        if created:
           scholar.scholarship_name=scholarship_name
-          scholar.scholarship_documents=scholarship_documents
+          scholar.scholarship_documents=my_text
           scholar.scholarship_contact=scholarship_contact
           scholar.scholarship_dsiscription=scholarship_dsiscription
           scholar.save();
        else:
           scholar.scholarship_name=scholarship_name
-          scholar.scholarship_contact=scholarship_contact
+          scholar.scholarship_contact=my_text
           scholar.scholarship_dsiscription=scholarship_dsiscription
           scholar.scholarship_documents=scholarship_documents
           scholar.save();
@@ -321,6 +323,10 @@ def AlleventActionEdit(request,x_id):
              x=Newevent.objects.values()
              return render(request,'blog/allevent.html',{'events':x})
          return render(request,'blog/addevent.html',{'events':events})
+    
+    
+    
+    
 @login_required          
 def AlleventActionDelete(request,x_id):
             
@@ -328,6 +334,8 @@ def AlleventActionDelete(request,x_id):
             sync_to_async(restart())
             events=Newevent.objects.values()
             return render(request,'blog/allevent.html',{'events':events})
+      
+      
       
 @login_required     
 def newEvent(request):
@@ -345,6 +353,8 @@ def newEvent(request):
        restart()
        return render(request,'blog/allevent.html',{'events':events})
 
+
+
 def login_view(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -356,3 +366,8 @@ def login_view(request):
         else:
             messages.error(request, 'Invalid email or password')
     return render(request, 'blog/login.html')
+
+def logout(request):
+    auth.logout(request)
+    messages.success(request, 'You are logged out.')
+    return redirect('login')

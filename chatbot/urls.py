@@ -1,6 +1,5 @@
-from django.urls import path
+from django.urls  import  path
 from . import views
-
 
 urlpatterns=[
     path('',views.home,name="home"),
@@ -22,4 +21,5 @@ urlpatterns=[
     path("newEvent/",views.newEvent),
     path("setcollageinfo/",views.addCollageinfo),
     path("login/",views.login_view,name="login"),
+    path("logout/",views.logout,name='logout')
 ]
